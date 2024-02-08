@@ -91,20 +91,15 @@ export default function Login() {
     if (!isValid) return;
 
     axios
-      .get('https://6540a96145bedb25bfc247b4.mockapi.io/api/login')
+      .post('https://reqres.in/api/users', form)
       .then((res) => {
-        const user = res.data.find(
-          (item) => item.password == form.password && item.email == form.email
-        );
-        if (user) {
-          setForm(initialForm);
-
-          console.log("success")
-        } else {
-          console.log("error")
-        }
-      });
-  };
+        console.log(res);
+        setForm(initialForm);
+        console.log("success")
+      }).catch((err) => {
+        console.log(err);
+      })
+  }
 
   return (
     <div className="App">
