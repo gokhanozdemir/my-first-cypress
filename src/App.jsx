@@ -75,8 +75,10 @@ export default function Login() {
 
   useEffect(() => {
     if (
+      (form.name.length >= 3) ||
+      (form.surname.length >= 3) ||
       validateEmail(form.email) &&
-      form.password.trim().length >= 4 &&
+      (form.password.length >= 8) && validatePassword(form.password) &&
       form.terms
     ) {
       setIsValid(true);
