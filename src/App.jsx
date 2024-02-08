@@ -14,20 +14,26 @@ import {
 import axios from 'axios';
 
 const initialForm = {
+  name: '',
+  surname: '',
   email: '',
   password: '',
   terms: false,
 };
 
 const initialErrors = {
+  name: false,
+  surname: false,
   email: false,
   password: false,
   terms: false,
 };
 
 const errorMessages = {
+  name: 'Please enter a valid name longer than 3 characters',
+  surname: 'Please enter a valid surname longer than 3 characters',
   email: 'Please enter a valid email address',
-  password: 'Password must be at least 4 characters long',
+  password: 'Password must be at least 8 characters long, should contain at least one upper case, one lower case, one digit and one special character',
 };
 
 const validateEmail = (email) => {
@@ -35,6 +41,12 @@ const validateEmail = (email) => {
     /^((?!\.)[\w\-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gm
   );
   return email.match(regexTest);
+};
+const validatePassword = (password) => {
+  const regexTest = new RegExp(
+    /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$/gm
+  );
+  return password.match(regexTest);
 };
 
 export default function Login() {
@@ -49,8 +61,10 @@ export default function Login() {
     setForm({ ...form, [name]: value });
 
     if (
+      (name === 'name' && value.length >= 3) ||
+      (name === 'surname' && value.length >= 3) ||
       (name === 'terms' && value) ||
-      (name === 'password' && value.length >= 4) ||
+      (name === 'password' && value.length >= 8) && validatePassword(value) ||
       (name === 'email' && validateEmail(value))
     ) {
       setErrors({ ...errors, [name]: false });
@@ -94,8 +108,34 @@ export default function Login() {
 
   return (
     <div className="App">
-      <h1 className='underline text-sky-600'>Cypress Login</h1>
+      <h1 className='underline text-sky-600 mb-4'>Cypress Login</h1>
       <Form onSubmit={handleSubmit}>
+        <FormGroup>
+          <Label for="exampleName">Name</Label>
+          <Input
+            id="exampleName"
+            name="name"
+            placeholder="Enter your name"
+            type="text"
+            onChange={handleChange}
+            invalid={errors.name}
+            value={form.name}
+          />
+          {errors.name && <FormFeedback>{errorMessages.name}</FormFeedback>}
+        </FormGroup>
+        <FormGroup>
+          <Label for="exampleSurName">Surname</Label>
+          <Input
+            id="exampleSurName"
+            name="surname"
+            placeholder="Enter your surname"
+            type="text"
+            onChange={handleChange}
+            invalid={errors.surname}
+            value={form.surname}
+          />
+          {errors.surname && <FormFeedback>{errorMessages.surname}</FormFeedback>}
+        </FormGroup>
         <FormGroup>
           <Label for="exampleEmail">Email</Label>
           <Input
@@ -140,7 +180,7 @@ export default function Login() {
         </FormGroup>
         <FormGroup className="text-center p-4">
           <Button disabled={!isValid} color="primary">
-            Sign In
+            Register
           </Button>
         </FormGroup>
       </Form></div>
