@@ -13,7 +13,7 @@ describe("form validations", () => {
 
   // Bu testin geçmemesi lazım
   it("form doldurulunca buton aktif oluyor", () => {
-    cy.get('input[name="name"]').type("as");
+    cy.get('input[name="name"]').type("asd");
     cy.get('input[name="surname"]').type("Özdemir");
     cy.get('input[name="email"]').type("admin@test.com");
     cy.get('input[name="password"]').type("123456Qa!");

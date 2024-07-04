@@ -22,11 +22,7 @@ const initialForm = {
 };
 
 const initialErrors = {
-  name: false,
-  surname: false,
-  email: false,
-  password: false,
-  terms: false,
+
 };
 
 const errorMessages = {
@@ -105,7 +101,7 @@ export default function Login() {
 
   return (
     <div className="App">
-      <h1 className='underline text-sky-600 mb-4'>Cypress Login</h1>
+      <h1 className='underline text-sky-600 mb-4'>Cypress Login Güzel Soru</h1>
       <Form onSubmit={handleSubmit}>
         <FormGroup>
           <Label for="exampleName">Name</Label>
